@@ -6,16 +6,20 @@ import (
 	"todo-practice/handlers/users"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
 	db.ConnectionDB()
 
 	app := fiber.New()
+	app.Use(cors.New())
 
 	app.Post("/todos", todos.AddTodos)
 	app.Post("/users", users.AddUser)
+	app.Get("/todos", todos.GetTask)
+	app.Delete("/todos/:id", todos.DeleteTask)
 
-	app.Listen(":3000")
+	app.Listen(":3001")
 
 }

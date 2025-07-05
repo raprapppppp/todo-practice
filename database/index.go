@@ -27,6 +27,7 @@ func ConnectionDB() error {
 
 	Database.AutoMigrate(&users.Users{})
 	Database.AutoMigrate(&todos.Todos{})
+	Database.AutoMigrate(&todos.TodosOrig{})
 
 	log.Println("Database connected successfully!")
 	log.Println("Database migration complete.")
