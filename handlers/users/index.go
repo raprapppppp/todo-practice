@@ -5,7 +5,17 @@ import (
 	"todo-practice/models/users"
 
 	"github.com/gofiber/fiber/v2"
+	"golang.org/x/crypto/bcrypt"
 )
+
+func HashPassword(password string) (string, error) {
+	var hashPassword []byte
+	var err error
+
+	hashPassword, err = bcrypt.GenerateFromPassword([]byte(password), 14)
+
+	return string(hashPassword), err
+}
 
 func AddUser(c *fiber.Ctx) error {
 

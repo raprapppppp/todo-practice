@@ -17,10 +17,7 @@ func AddTodos(c *fiber.Ctx) error {
 
 	db.Database.Create(&payload)
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "Todo added successfully",
-		"data":    payload,
-	})
+	return c.Status(fiber.StatusCreated).JSON(payload)
 }
 
 // This is handler request without user id
@@ -41,5 +38,17 @@ func DeleteTask(c *fiber.Ctx) error {
 		return c.SendStatus(400)
 	}
 	return c.SendStatus(200)
+}
 
+func UpdateTask(c *fiber.Ctx) error {
+
+	var payload todos.TodosOrig
+
+	as := c.BodyParser(&payload)
+
+	id := payload.ID
+
+	db.Database.Where("id = ?", id).Updates(as)
+
+	return c.JSON(payload)
 }
